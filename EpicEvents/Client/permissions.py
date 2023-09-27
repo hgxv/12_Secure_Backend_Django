@@ -1,5 +1,6 @@
 from rest_framework.permissions import BasePermission, SAFE_METHODS
-from CRM.models import *
+
+from Contract.models import Contract
 
 
 class ReadOnly(BasePermission):
@@ -8,37 +9,24 @@ class ReadOnly(BasePermission):
             return True
 
 
-class IsManagement(BasePermission):
-    def has_permission(self, request, view):
-        role = request.user.group
-        if role == "MA":
-            return True
-        return False
-
-
 class CreateObjects(BasePermission):
     def has_permission(self, request, view):
         role = request.user.group
         if (view.action == "create") & (role != "SA"):
+            print("ici")
             return False
         return True
 
 
 class ClientAndContractPermission(BasePermission):
     def has_object_permission(self, request, view, obj):
-        if request.method in ["PUT", "DELETE"]:
+        if request.method in ["PUT", "PATCH", "DELETE"]:
             if isinstance(obj, Contract):
                 sales_contact = obj.client.sales_contact
             else:
                 sales_contact = obj.sales_contact
 
             if sales_contact != request.user:
+                print(sales_contact)
                 return False
             return True
-
-
-class EventPermission(BasePermission):
-    def has_object_permission(self, request, view, client):
-        if client.support_contact == request.user:
-            return True
-        return False

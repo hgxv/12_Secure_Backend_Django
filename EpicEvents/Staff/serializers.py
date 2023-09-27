@@ -1,29 +1,7 @@
 from rest_framework.serializers import ModelSerializer
 from django.contrib.auth.models import Group
-from CRM.models import Client, Contract, Event, Staff
 
-
-class ClientSerializer(ModelSerializer):
-    class Meta:
-        model = Client
-        fields = "__all__"
-
-
-class ContractSerializer(ModelSerializer):
-    class Meta:
-        model = Contract
-        fields = "__all__"
-
-    def create(self, data):
-        client = Client.objects.get(id=data["client"])
-        if client.is_client == False:
-            client.isclient = True
-
-
-class EventSerializer(ModelSerializer):
-    class Meta:
-        model = Event
-        fields = "__all__"
+from Staff.models import Staff
 
 
 class StaffSerializer(ModelSerializer):
@@ -64,11 +42,13 @@ class CreateStaffSerializer(ModelSerializer):
         user.first_name = data["first_name"]
         user.last_name = data["last_name"]
 
-        group_name = Staff.GROUPS[data["group"]]
-        group = Group.objects.get(name=group_name)
+        for role in Staff.GROUP_CHOICE:
+            if data["group"] in role:
+                group_name = role[1]
+                print(group_name)
+                group = Group.objects.get(name=group_name)
 
-        user.group = data["group"]
-        user.groups.add(group)
-
-        user.save()
-        return user
+                user.group = data["group"]
+                user.groups.add(group)
+                user.save()
+                return user
