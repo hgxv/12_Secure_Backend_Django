@@ -5,10 +5,11 @@ from django_filters.rest_framework import DjangoFilterBackend
 from Client.models import Client
 from Client.serializers import ClientSerializer
 
-from Client.permissions import (
+from utils.permissions import (
     CreateObjects,
     ClientAndContractPermission,
     ReadOnly,
+    CantDelete,
 )
 
 from django.utils import timezone
@@ -18,11 +19,16 @@ class ClientViewset(viewsets.ModelViewSet):
     queryset = Client.objects.all()
     serializer_class = ClientSerializer
     permission_classes = [
-        permissions.IsAuthenticated & CreateObjects & ClientAndContractPermission
+        (
+            permissions.IsAuthenticated
+            & CreateObjects
+            & ClientAndContractPermission
+            & CantDelete
+        )
         or ReadOnly
     ]
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ("first_name", "email")
+    filterset_fields = ("first_name", "last_name", "company_name", "email")
 
     def create(self, request):
         serializer = self.serializer_class(

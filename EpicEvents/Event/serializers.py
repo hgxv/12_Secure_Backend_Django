@@ -1,5 +1,4 @@
 from rest_framework.serializers import ModelSerializer
-from Contract.models import Contract
 
 from django.utils import timezone
 
@@ -11,13 +10,11 @@ class EventSerializer(ModelSerializer):
         model = Event
         fields = "__all__"
 
-    def create(self, data):
-        contract = Contract.objects.get(id=data["contract"])
-        if contract.status == "NC":
-            contract.status = "OG"
-        return contract
-
     def update(self, instance, validated_data):
         instance = super().update(instance, validated_data)
+        if instance.status is False:
+            instance.contract.status = "DO"
+            instance.contract.save()
         instance.date_updated = timezone.now()
+        instance.save()
         return instance

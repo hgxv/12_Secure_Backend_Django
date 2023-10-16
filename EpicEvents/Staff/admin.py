@@ -4,7 +4,7 @@ from django.contrib.auth.models import Group
 from Staff.models import Staff
 
 
-class UserAdmin(admin.ModelAdmin):
+class CustomUserAdmin(UserAdmin):
     list_display = ("username", "id", "first_name", "last_name", "group", "email")
 
 
@@ -21,4 +21,4 @@ class GenericGroup(GroupAdmin):
     inlines = [UserInLine]
 
 
-admin.site.register(Staff, UserAdmin)
+admin.site.register(Staff, CustomUserAdmin)

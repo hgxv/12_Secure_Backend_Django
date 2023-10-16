@@ -13,6 +13,8 @@ class ContractSerializer(ModelSerializer):
         contract = super().create(validated_data)
         contract.sales_contact = self.context["request"].user
         contract.date_created = timezone.now()
+        contract.status = "NC"
+        contract.save()
         return contract
 
     def update(self, instance, validated_data):

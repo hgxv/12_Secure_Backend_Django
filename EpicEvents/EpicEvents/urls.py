@@ -14,8 +14,8 @@ router.register("clients", ClientViewset, basename="clients")
 router.register("contracts", ContractViewset, basename="contracts")
 router.register("staff", StaffViewset, basename="staff")
 
-contract_router = routers.NestedSimpleRouter(router, "contracts", lookup="contract")
-contract_router.register("contracts_events", EventViewset, basename="contracts_events")
+contract_router = routers.NestedSimpleRouter(router, "contracts", lookup="contracts")
+contract_router.register("events", EventViewset, basename="event")
 
 
 urlpatterns = [

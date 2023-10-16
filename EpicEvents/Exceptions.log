@@ -1,0 +1,23 @@
+WARNING 2023-10-09 15:05:10,850 log GET Not Found: /favicon.ico
+WARNING 2023-10-09 15:05:31,644 log GET Not Found: /favicon.ico
+WARNING 2023-10-09 15:05:33,219 log GET Not Found: /favicon.ico
+WARNING 2023-10-09 15:06:55,726 log GET Not Found: /favicon.ico
+WARNING 2023-10-09 15:10:44,541 log POST Bad Request: /contracts/
+WARNING 2023-10-09 15:13:47,518 log PATCH Method Not Allowed: /contracts/23/events/
+ERROR 2023-10-09 15:14:00,687 log PATCH Internal Server Error: /contracts/3/events/23
+Traceback (most recent call last):
+  File "C:\Users\Kévin\Desktop\Openclassroom\12_Secure_Backend_Django\env\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Kévin\Desktop\Openclassroom\12_Secure_Backend_Django\env\Lib\site-packages\django\utils\deprecation.py", line 136, in __call__
+    response = self.process_response(request, response)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Kévin\Desktop\Openclassroom\12_Secure_Backend_Django\env\Lib\site-packages\django\middleware\common.py", line 108, in process_response
+    return self.response_redirect_class(self.get_full_path_with_slash(request))
+                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Kévin\Desktop\Openclassroom\12_Secure_Backend_Django\env\Lib\site-packages\django\middleware\common.py", line 87, in get_full_path_with_slash
+    raise RuntimeError(
+RuntimeError: You called this URL via PATCH, but the URL doesn't end in a slash and you have APPEND_SLASH set. Django can't redirect to the slash URL while maintaining PATCH data. Change your form to point to 127.0.0.1:8000/contracts/3/events/23/ (note the trailing slash), or set APPEND_SLASH=False in your Django settings.
+WARNING 2023-10-09 18:33:59,827 log PATCH Bad Request: /contracts/3/events/23/
+WARNING 2023-10-09 18:35:55,536 log PATCH Bad Request: /contracts/3/events/23/
+WARNING 2023-10-09 18:36:19,885 log PATCH Bad Request: /contracts/3/events/23/

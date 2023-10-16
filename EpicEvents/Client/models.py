@@ -12,4 +12,4 @@ class Client(models.Model):
     company_name = models.CharField(max_length=250, null=True)
     date_created = models.DateTimeField(null=True)
     date_updated = models.DateTimeField(null=True)
-    sales_contact = models.ForeignKey(Staff, null=True, on_delete=models.SET_NULL)
+    sales_contact = models.ForeignKey(Staff, null=True, on_delete=models.RESTRICT)
